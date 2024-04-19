@@ -1,4 +1,10 @@
+#!/usr/bin/env python
+import regex as re
 from base import BaseTokenizer, merge, get_stats 
+
+
+LLAMA3_SPLIT_PATTERN = r"""(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"""
+GPT4_SPLIT_PATTERN   = r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""
 
 
 class BasicTokenizer(BaseTokenizer):
@@ -7,6 +13,7 @@ class BasicTokenizer(BaseTokenizer):
 
   def train(self, text, vocab_size=256, verbose=False):
     """builds merges"""
+    assert vocab_size >= 255
     num_merges = vocab_size - 256
     merges = {}
     vocab = {i:bytes([i]) for i in range(256)}
