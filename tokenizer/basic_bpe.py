@@ -152,18 +152,25 @@ if __name__ == '__main__':
   # loading data to train tokenizer
   # with open('../data/cs.txt', 'r') as f:
   #   text = f.read()
-  # tcn.train(text, 256 + 3000, verbose=True) # 256 are the byte tokens, then do 3k merges
-  # tcn.save('bpe3k')
+  # tcn.train(text, 256 + 5000, verbose=True) # 256 are the byte tokens, then do 5k merges
+  # tcn.save('bpe5k')
 
-  tcn.load('bpe3k.model')
+  tcn.load('bpe5k.model')
   tokens = tcn.encode_ordinary('hello world!!!? (안녕하세요!) lol123 😉')
-  print(tcn.decode(tokens))
+  tcn.decode(tokens) == 'hello world!!!? (안녕하세요!) lol123 😉'
   # 'Computer Science, technology'
 
   assert 'Computer Science, technology' == tcn.decode(tcn.encode_ordinary('Computer Science, technology'))
 
   tokens = tcn.encode('<|startoftext|> hello world!!! <|endoftext|>')
-  print(tokens) # [3256, 337, 539, 111, 1700, 33, 33, 33, 32, 3257]
+  # print(tokens) # [3256, 337, 539, 111, 1700, 33, 33, 33, 32, 3257]
   # 3256 -> start of text 
   # 3257 -> end of text 
-  print(tcn.decode(tokens))
+  assert tcn.decode(tokens) == '<|startoftext|> hello world!!! <|endoftext|>'
+
+  text = 'In the ever-evolving landscape of computer science, advancements in artificial intelligence and machine learning continue to reshape industries and societies. From developing sophisticated algorithms for data analysis to creating intelligent systems capable of autonomous decision-making, the field of computer science is at the forefront of innovation. As researchers delve deeper into topics like neural networks, natural language processing, and computer vision, the possibilities seem endless. With each breakthrough, the boundaries of what computers can achieve expand, opening up new avenues for exploration and discovery. In this fast-paced digital age, staying abreast of the latest developments in computer science is essential'
+  tokens = tcn.encode(text)
+  assert tcn.decode(tokens) == text
+  print(len(list(text.encode('utf-8'))), len(tokens)) # 736, 180
+  print("compression ratio", round(100 - len(tokens) / len(list(text.encode('utf-8'))) * 100, 4), "%")
+  # compression ratio 75.5435 %
