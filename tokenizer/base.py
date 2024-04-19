@@ -1,14 +1,12 @@
 # karpthy/minbpe ripoff 
 
-# Helper function =================================
-
-def get_stats(tokens):
-  toks = {}
+def get_stats(tokens: list, toks=None) -> dict:
+  toks = toks if toks else {}
   for pair in zip(tokens, tokens[1:]):
     toks[pair] = toks.get(pair, 0) + 1
   return toks
 
-def merge(tokens, pair, idx):
+def merge(tokens: list, pair: tuple, idx: int) -> list:
   i = 0
   new_tokens = []
   while i < len(tokens):
@@ -19,8 +17,6 @@ def merge(tokens, pair, idx):
       new_tokens.append(tokens[i])
       i+=1
   return new_tokens
-
-# =============== Regex helpers ====================
 
 def replace_control_characters(s: str) -> str:
   # we don't want to print control characters
@@ -41,8 +37,6 @@ def render_token(t: bytes) -> str:
     s = t.decode('utf-8', errors='replace')
     s = replace_control_characters(s)
     return s
-
-# ===================================================
 
 # base tokenizer class
 class BaseTokenizer:
