@@ -1,5 +1,4 @@
-### some research papers list
-
+### Self notes for some research papers list
 protip, use  perplexity.ai as a resource scrapper
 
 - [x] Understanding deeplearning requires rethinking generalization (research paper)-- See mnist_generalization [notebook](./mnist_generalization.ipynb)
@@ -23,6 +22,10 @@ protip, use  perplexity.ai as a resource scrapper
   - [ ] Fuyu (2023)
   - [ ] Mamba, S4, SSM (2023)
   - [ ] InfiniAtten (2024)
+  - [ ] RoPE
+  - [ ] Grouped Query Attention
+  - [ ] Sliding Window Attention
+  - [ ] RF
 
 - [ ] CNN Casestudy: CNN - Le - Alex - ZF - VGG - GoogleNet (inception architecture)
 - [ ] Visualizing CNN techniques
