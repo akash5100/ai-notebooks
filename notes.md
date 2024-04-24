@@ -3,7 +3,7 @@
 protip, use  perplexity.ai as a resource scrapper
 
 - [x] Understanding deeplearning requires rethinking generalization (research paper)-- See mnist_generalization [notebook](./mnist_generalization.ipynb)
-- [x] SGD - AdamW / AdamScheduleFree (cs231n)
+- [x] SGD - AdamW / AdamScheduleFree (cs231n) [see blog](https://akash5100.github.io/blog/2024/04/12/Optimization_techniques.html)
 - [ ] Transformer (Attention is all you need)
   - [ ] Self A, Multi Head A, Cross A (Attention)
   - [ ] GPT (2018) [LLMs are multitask learners (Ilya)]
