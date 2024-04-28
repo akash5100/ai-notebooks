@@ -1,4 +1,4 @@
-# Self notes for some research papers list
+# research on research papers to research stuffs for fun as a hobby
 protip, use  perplexity.ai as a resource scrapper
 
 
@@ -7,7 +7,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Hessian Matrix (second order, BFGS, LBFGS etc)
 
 ## Development of language models
-- [x] Transformer (Attention is all you need)
+- [x] Transformer (Attention is all you need) [see here](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
   - [x] Self A, Multi Head A, Cross A (Attention)
   - [ ] GPT (2018) [LLMs are multitask learners (Ilya)]
   - [ ] BERT (2018)
@@ -47,14 +47,16 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] CLIP-ResNet (read somewhere kinda interesting, mostprobably best ResNet till date? not sure)
 - [ ] COCO dataset (train something) 
 
-
 - [ ] Multi-modality
-- [ ] Generating Sequence with RNN (Alex graves, 2013)
+- [ ] Mistral of Experts
 - [ ] https://openai.com/research/weak-to-strong-generalization
 - [ ] https://openai.com/research/microscope
 - [ ] https://openai.com/research/language-models-can-explain-neurons-in-language-models
-- [ ] Mistral of Experts
 - [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
+
+
+## Where does this goes? (To be learned)
+- [ ] Quantization? Factorization?
 
 
 ## Image Generation
@@ -74,6 +76,7 @@ protip, use  perplexity.ai as a resource scrapper
 
 ## Some research papers
 - [x] Understanding deeplearning requires rethinking generalization (research paper)-- See mnist_generalization [notebook](./mnist_generalization.ipynb)
+- [ ] Generating Sequence with RNN (Alex graves, 2013)
 - [ ] LM are Few Shot learners (https://arxiv.org/pdf/2005.14165)
 - [ ] The recurrent temporal restricted boltzmann machine (research paper)-- energy model sounds interesting!
 - [ ] Faster Training: Super Convergence (research paper)
@@ -91,3 +94,6 @@ protip, use  perplexity.ai as a resource scrapper
 ## New (saw somewhere in twitter)
 - [ ] Byte-level tokenization
 - [ ] LM without tokens
+
+## Flops
+- [ ] gemm in C + Python (for noobs, use time monotonic!)
