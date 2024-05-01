@@ -3,11 +3,12 @@ protip, use  perplexity.ai as a resource scrapper
 
 
 ## Optimization algorithm
-- [x] SGD - AdamW / AdamScheduleFree (cs231n) [see blog](https://akash5100.github.io/blog/2024/04/12/Optimization_techniques.html)
+- [x] SGD -> Momentum -> NAG -> AdaGrad -> RMSProp -> Adam -> AdamW -> AdamScheduleFree (2024, by FAIR) [read blog](https://akash5100.github.io/blog/2024/04/12/Optimization_techniques.html)
+  Available in cs231n lecture.
 - [ ] Hessian Matrix (second order, BFGS, LBFGS etc)
 
 ## Development of language models
-- [x] Transformer (Attention is all you need) [see here](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
+- [x] Transformer (Attention is all you need) [read blog](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
   - [x] {Self, Multi Head, Cross} Attention
   - [ ] GPT (2018) [LLMs are multitask learners (Ilya)]
   - [ ] BERT (2018)
@@ -34,6 +35,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] LSTM 'done update'
 - [ ] GRU 'done update'
 - [ ] Seq2Seq (Ilya, 2014)
+- [ ] RAG?
 
 
 ## Vision
@@ -94,6 +96,8 @@ protip, use  perplexity.ai as a resource scrapper
 ## New (saw somewhere in twitter)
 - [ ] Byte-level tokenization
 - [ ] LM without tokens
+- [ ] Kolmogorov–Arnold Networks (KANs-- learned activations performs better than MLPs)
+- [ ] MambaByte--  token-free SSM for modeling long byte-sequences  [2401.13660](https://arxiv.org/pdf/2401.13660)
 
 ## Flops
 - [ ] gemm in C + Python (for noobs, use time monotonic!)
