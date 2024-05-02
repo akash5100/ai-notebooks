@@ -98,6 +98,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] LM without tokens
 - [ ] Kolmogorov–Arnold Networks (KANs-- learned activations performs better than MLPs)
 - [ ] MambaByte--  token-free SSM for modeling long byte-sequences  [2401.13660](https://arxiv.org/pdf/2401.13660)
+- [ ] Multi token Prediction-- https://arxiv.org/pdf/2404.19737
 
 ## Flops
 - [ ] gemm in C + Python (for noobs, use time monotonic!)
