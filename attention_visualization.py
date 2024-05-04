@@ -364,7 +364,7 @@ if __name__ == '__main__':
 
   # regularization
   P = 0.3 # dropout
-  WD = 0.01 # l2 # not implemented (yet)
+  WD = 0.01 # l2 # using AdamW
 
   # ====== dataset creation =========
   with open('./data/taylorswift.txt', 'r') as f: 
@@ -396,5 +396,5 @@ if __name__ == '__main__':
     token = [token.item()]
     print(tkn.decode(token), end='', flush=True)
 
-  print(attentions.shape) # as expected: ([8, 5, 1, 4, 16, 16])
+  print(attentions.shape) # as expected: ([8, 5, 4, 16, 16])
   torch.save(attentions, 'attentions.pt')
