@@ -7,13 +7,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 torch.manual_seed(42); # reproducibility
 
-# ==> GPT-2 ==> Train & sampling
 # visualize hidden states, if we put layernorm before attention and after attention (GPT-1 vs GPT-2 architecture)
 # Try to visualize Attention, for each context being generated.
 
 # byte pair encoding implementation 
 # https://en.wikipedia.org/wiki/Byte_pair_encoding
 
+SL = 16
 
 # get the most occured pair in decending order
 def get_stats(tokens, old_stats=None):
@@ -150,7 +150,12 @@ class Head(nn.Module):
     wei = self.dropout(wei)
     v = self.value(x)
     out = wei @ v
-    return out
+
+    #viz
+    weights = torch.bmm(q, k.transpose(-2,-1)) * (head_sz**-0.5)
+    weights = F.softmax(weights, dim=-1)
+
+    return out, weights
 
 
 ## Multi-Head Attention
@@ -162,9 +167,17 @@ class MultiHeadAttention(nn.Module):
     self.dropout = nn.Dropout(P)
   
   def forward(self, x): # B,T,C
-    out = torch.cat([h(x) for h in self.heads], dim=-1) # n* B,T,H -> B,T,n*H
-    out = self.dropout(self.linear(out)) # B,T,nH @ nH, C -> B,T,C 
-    return out
+    out = []
+    attention = []
+    for h in self.heads:
+      o, weights = h(x)
+      out.append(o)
+      attention.append(weights)
+    out = torch.cat(out, dim=-1) # n* B,T,H -> B,T,n*H
+    out = self.dropout(self.linear(out)) # B,T,nH @ nH, C -> B,T,C
+    # viz
+    attention = torch.stack(attention, dim=1)
+    return out, attention
 
 
 ## Feed Forward
@@ -193,13 +206,16 @@ class Transformer(nn.Module):
     self.ff = FeedForward(emb_sz)
     self.ln1 = nn.LayerNorm(head_size)
     self.ln2 = nn.LayerNorm(head_size)
+    self.attention = None # viz
 
   def forward(self, x): # B, T, C
-    # self.ln1(x)
-    x = x + self.sa(self.ln1(x))
+    h, attention = self.sa(self.ln1(x))
+    self.attention = attention # save to viz
+    x = x + h
     x = x + self.ff(self.ln2(x))
     return x
-  
+
+
 class GPT2(nn.Module):
   def __init__(self):
     super().__init__()
@@ -236,40 +252,108 @@ class GPT2(nn.Module):
   
   @torch.no_grad()
   def generate(self, idx, max_new_tokens):
+    if type(idx) is str:
+      idx = torch.tensor(tkn.encode(idx), dtype=torch.long).unsqueeze(0)
+
+    attentions = []
     for _ in range(max_new_tokens):
       i = idx[:, -SL:]
       logits, _ = self(i)
-      logits = logits[:, -1, :] # B,T,C -> B,C
+
+      # extra
+      block_attention = []
+      for block in self.blocks:
+        block_attention.append(block.attention.squeeze(0))
+      attentions.append(torch.stack(block_attention, dim=0))
+      ####
+
+      logits = logits[:,-1,:]
       probs = logits.softmax(-1)
-      next_idx = torch.multinomial(probs, num_samples=1)
-      idx = torch.cat((idx, next_idx), dim=1)
-    return idx.squeeze()
+      next_idx = torch.multinomial(probs, 1)
+      idx = torch.cat((idx, next_idx), dim=-1)
+      # yield next_idx
+    return torch.stack(attentions, dim=0), idx.squeeze(0)
+
+def get_batch(split, context_len=SL):
+  data = train_data if split == 'train' else valid_data
+  idx = torch.randint(0, len(data)-context_len, size=(bs,))
+  x = torch.stack([data[i  :i+context_len  ] for i in idx])
+  y = torch.stack([data[i+1:i+context_len+1] for i in idx])
+  return x,y
+
+@torch.no_grad()
+def split_loss():
+  eval_iters = 200  # run val per x data
+  out = {}
+  model.eval()
+  for split in ['train', 'val']:
+    losses = torch.zeros(eval_iters)
+    for k in range(eval_iters):
+      X, Y = get_batch(split)
+      _, loss = model(X, Y)
+      losses[k] = loss.item()
+    out[split] = losses.mean()
+  model.train()
+  return out['train'], out['val']
+
+def train(model, epoch, lr, warmup=False):
+  optim = torch.optim.AdamW(model.parameters(), lr, (0.9, 0.995))
+  if warmup:
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optim, lambda epoch: min(1, (epoch + 1)/2000 ))
+  interval = 100    # run val per x epoch
+  save_interval = 500 # save every x epoch
+  lossi, vlossi = [], []
+  for i in range(epoch):
+    xb,yb = get_batch('train')
+    _, loss = model(xb, yb)
+    # backward
+    model.zero_grad(set_to_none=True)
+    loss.backward()
+    # step
+    optim.step()
+    if warmup:
+      scheduler.step() #update lr
+    # train-valid split testing (sometimes)
+    if i % interval == 0 or i == epoch-1:
+      tloss, vloss = split_loss()
+      print(f"epoch {i:7d}/{epoch:7d} | loss: {tloss:7.4f} | perp: {(loss.exp().item()):7.4f} | vloss: {vloss:7.4f} | vperp: {(vloss.exp().item()):7.4f}")
+    if i % save_interval == 0 or i == epoch-1:
+      if len(vlossi) > 0 and vloss == min(vlossi):
+        torch.save(model.state_dict(), 'gpt2.best.pth')
+        print('==')
+      torch.save(model.state_dict(), 'gpt2.1.pth')
+      print("--")
+    # track
+    lossi.append(loss.item())
+    vlossi.append(vloss.item())
+  return lossi, vlossi
+
+# Visualization helpers
+
 
 
 if __name__ == '__main__':
-  # Hyperparameter
-  merges = 2000 - 256
-
   # creation of encoder and decoder
   # with open('./data/new.txt', 'r') as f:
   #   txt = f.read()
   # tokens = list(txt.encode('utf-8'))
 
   tkn = BPETokenizer()
+  # # Hyperparameter
+  # merges = 2000 - 256
   # tkn.train(txt, merges, True)
   # tkn.save(f'bpe2k')
   tkn.load(f'bpe2k.model')
-  text = 'hello world is my name??' # finetune and add trailing space infront
-  assert text == tkn.decode(tkn.encode(text))
+  # text = 'hello world is my name??' # finetune and add trailing space infront
+  # assert text == tkn.decode(tkn.encode(text))
 
-  # model init ======================
+  # =========== model init ===========
   ## GPT-2 Hyperparams
   bs = 32
   lr = 2.5e-4
-  # warmup = 2000 # warmup, linear increase in lr
-  epoch = 2000 # converge
+  epoch = 2000
 
-  SL = 8
+  # SL = 16
   vocab_sz = len(tkn.vocab) # 2k merges
   emb_sz = 64
   pos_sz = 64
@@ -279,108 +363,38 @@ if __name__ == '__main__':
   n_layers = 5 # layers of stacked transformers
 
   # regularization
-  P = 0.1 # dropout
+  P = 0.3 # dropout
   WD = 0.01 # l2 # not implemented (yet)
 
   # ====== dataset creation =========
-  with open('./data/taylorswift.txt', 'r') as f:
+  with open('./data/taylorswift.txt', 'r') as f: 
     text = f.read()
-    f.close()
-  tokens = tkn.encode(text)
-  tokens = torch.tensor(tokens)
-  n = int(len(tokens) * 0.9)
+  tokens = torch.tensor(tkn.encode(text))
+  n = int(len(tokens) * 0.8)
   train_data = tokens[:n]
   valid_data = tokens[n:]
-  
-  def get_batch(split, context_len=SL):
-    data = train_data if split == 'train' else valid_data
-    idx = torch.randint(0, len(data)-context_len, size=(bs,))
-    x = torch.stack([data[i  :i+context_len  ] for i in idx])
-    y = torch.stack([data[i+1:i+context_len+1] for i in idx])
-    return x,y
-
-  interval = 100    # run val per x epoch
-  eval_iters = 200  # run val per x data
-  lossi = []
-  vlossi = []
-
-  @torch.no_grad()
-  def split_loss():
-    out = {}
-    model.eval()
-    for split in ['train', 'val']:
-      losses = torch.zeros(eval_iters)
-      for k in range(eval_iters):
-        X, Y = get_batch(split)
-        _, loss = model(X, Y)
-        losses[k] = loss.item()
-      out[split] = losses.mean()
-    model.train()
-    return out['train'], out['val']
-
 
   model = GPT2()
-  optim = torch.optim.AdamW(model.parameters(), lr, (0.9, 0.995))
+  model.load_state_dict(torch.load('./gpt2.1.pth'))
 
   print("==============================")
   print(str(round(sum([p.nelement() for p in model.parameters()]) / 1e6, 2)) + ' million parameters')
-  print(str(sum([p.nelement() for p in model.parameters()])))
+  print(str(sum([p.nelement() for p in model.parameters()])) + ' exactly')
   print("==============================")
-
+  
   # ----- train -------
-  for i in range(epoch):
-    # mini-batch
-    xb,yb = get_batch('train')
-    logits, loss = model(xb, yb)
-    
-    # backward
-    optim.zero_grad(set_to_none=True)
-    loss.backward()
-    
-    # step
-    optim.step()
-    
-    # train-valid split testing (sometimes)
-    if i % interval == 0 or i == epoch-1:
-      tloss, vloss = split_loss()
-      # print(f"epoch {i:7d}/{epoch:7d} | loss: {loss:7.4f} | perp: {(loss.exp().item()):7.4f}")
-      print(f"epoch {i:7d}/{epoch:7d} | loss: {tloss:7.4f} | perp: {(loss.exp().item()):7.4f} | loss: {vloss:7.4f}")
-
-    # track
-    lossi.append(loss.item())
-    vlossi.append(vloss.item())
+  # train(model, 1, 2.5e-4, warmup=False)
   # ----- ----- -------
   
-  torch.save(model.state_dict(), 'gpt2.pth')
-  
-  import matplotlib.pyplot as plt
-  plt.plot(lossi) 
-  plt.plot(vlossi) 
-  plt.show()
-  """
-  ==============================
-  0.76 million parameters
-  755920
-  ==============================
-  epoch       0/   2000 | loss:  7.5541 | perp: 2012.4192 | loss:  7.5522
-  epoch     100/   2000 | loss:  6.2247 | perp: 511.0773 | loss:  6.2492
-  epoch     200/   2000 | loss:  5.6837 | perp: 271.5088 | loss:  5.7536
-  epoch     300/   2000 | loss:  5.2621 | perp: 263.9460 | loss:  5.3231
-  epoch     400/   2000 | loss:  4.8051 | perp: 100.9346 | loss:  4.9393
-  epoch     500/   2000 | loss:  4.5254 | perp: 77.6216 | loss:  4.6859
-  epoch     600/   2000 | loss:  4.2748 | perp: 63.5046 | loss:  4.5167
-  epoch     700/   2000 | loss:  4.0867 | perp: 78.7867 | loss:  4.3576
-  epoch     800/   2000 | loss:  3.9832 | perp: 73.2226 | loss:  4.2666
-  epoch     900/   2000 | loss:  3.8379 | perp: 66.1574 | loss:  4.2452
-  epoch    1000/   2000 | loss:  3.7920 | perp: 45.0464 | loss:  4.2208
-  epoch    1100/   2000 | loss:  3.7132 | perp: 24.8325 | loss:  4.1533
-  epoch    1200/   2000 | loss:  3.6406 | perp: 59.5014 | loss:  4.1499
-  epoch    1300/   2000 | loss:  3.6134 | perp: 38.5099 | loss:  4.1112
-  epoch    1400/   2000 | loss:  3.5232 | perp: 25.4662 | loss:  4.0760
-  epoch    1500/   2000 | loss:  3.4874 | perp: 31.1807 | loss:  4.0921
-  epoch    1600/   2000 | loss:  3.4362 | perp: 20.6329 | loss:  4.0134
-  epoch    1700/   2000 | loss:  3.3913 | perp: 25.0268 | loss:  4.0013
-  epoch    1800/   2000 | loss:  3.3134 | perp: 33.3010 | loss:  3.9572
-  epoch    1900/   2000 | loss:  3.3111 | perp: 32.1315 | loss:  3.9889
-  epoch    1999/   2000 | loss:  3.2927 | perp: 25.7719 | loss:  3.9600
-  """
+  # sampling
+  gen_tokens = 10
+  prompt = " Join the Wiki­data contest and help improve geo­graphi­cally located items in 16 countries!"
+  # print(prompt, end='')
+  # # idx = torch.zeros((1, 1), dtype=torch.long)
+  attentions, gen = model.generate(prompt, max_new_tokens=gen_tokens)
+  for token in gen:
+    token = [token.item()]
+    print(tkn.decode(token), end='', flush=True)
+
+  print(attentions.shape) # as expected: ([8, 5, 1, 4, 16, 16])
+  torch.save(attentions, 'attentions.pt')

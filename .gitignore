@@ -4,3 +4,5 @@ todo.md
 *.model
 *.vocab
 **/__pycache__
+*.pth
+*.pt
