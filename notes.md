@@ -6,12 +6,16 @@ protip, use  perplexity.ai as a resource scrapper
 - [x] SGD -> Momentum -> NAG -> AdaGrad -> RMSProp -> Adam -> AdamW -> AdamScheduleFree (2024, by FAIR) [read blog](https://akash5100.github.io/blog/2024/04/12/Optimization_techniques.html)
   Available in cs231n lecture.
 - [ ] Hessian Matrix (second order, BFGS, LBFGS etc)
+- [ ] AdamP, RAdam, and Stochastic Gradient Descent with Warm Restarts (SGDR)
+
+
 
 ## Development of language models
 - [x] Transformer (Attention is all you need) [read blog](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
   - [x] {Self, Multi Head, Cross} Attention
-  - [ ] GPT (2018) [LLMs are multitask learners (Ilya)]
-  - [ ] BERT (2018)
+  - [x] GPT (2018) [LLMs are multitask learners (Ilya)]
+  - [ ] BERT (2018) -> is NumBERT a thing?
+  <!-- RoBERTa, DistilBERT, or ALBERT -->
   - [ ] T5 (2019)
   - [ ] RoBERTa (2019)
   - [ ] Transformer-XL (2019)
@@ -30,12 +34,41 @@ protip, use  perplexity.ai as a resource scrapper
   - [ ] Grouped Query Attention
   - [ ] Sliding Window Attention
 
-## Models
+
+
+## Language Models
 - [ ] RNN 'done update'
 - [ ] LSTM 'done update'
 - [ ] GRU 'done update'
 - [ ] Seq2Seq (Ilya, 2014)
-- [ ] RAG?
+- [ ] JukeBox
+- [ ] Mixture of experts (MoE)
+- [ ] LLaMA
+- [ ] Switch Transformers
+- [ ] Multi-modality
+- [ ] Beam Search?
+- [ ] RAG
+- [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
+- [ ] Greedy search used in LLMs for better predictions
+
+
+
+## Tokenization
+- [x] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
+- [ ] https://arxiv.org/pdf/2207.14255.pdf
+- [ ] https://arxiv.org/pdf/2304.08467.pdf
+- [x] https://www.beren.io/2023-02-04-Integer-tokenization-is-insane/
+  - "tokenization inconsistency" or "numerical tokenization problem"
+  - Researchers have addressed this challenge in various ways:
+    - Specialized tokenizers
+    - MathBERT
+    - Subword tokenization
+      Google's PaLM (2022) use subword tokenization, which breaks down numbers into subwords (e.g., 123 → [1, 2, 3]). This allows for more consistent tokenization and better generalization to unseen numbers
+    - Positional encoding: https://arxiv.org/pdf/2211.00170
+- Math using tokens
+  - GPT-2 -> Minerva 62B -> GPT-4 :)
+  - WizardMath
+
 
 
 ## Vision
@@ -48,14 +81,9 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] ResNet (residual and skip connection, research paper)
 - [ ] CLIP-ResNet (read somewhere kinda interesting, mostprobably best ResNet till date? not sure)
 - [ ] COCO dataset (train something) 
+- [ ] yolo
+- [ ] SSD?
 
-- [ ] Multi-modality
-- [ ] Mistral of Experts? Mixtral of experts?
-- [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
-
-
-## Where does this goes? (To be learned)
-- [ ] Quantization? Factorization?
 
 
 ## Image Generation
@@ -64,18 +92,30 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] GAN
 - [ ] Stable Diffusion
 
+
+
 ## Reinforcement learning
 - [ ] RF
 - [ ] RoPE (it goes here? dont know.)
+- [ ] DQN
+- [ ] Policy Gradient Methods
+- [ ] DPO
+
+
 
 ## Normalization and Regularization
+- [ ] Quantization? Factorization?
+- [ ] Weight Standardization
+- [ ] Label Smoothing
+- [ ] Filter Response Normalization 
 - [ ] RMSNormLayer # most used, I think nowadays
 (TODO: add more recently used normalization layers in chronological order, to know how one improved other for eg)
 - [ ] LayerNorm (research paper)
 
+
+
 ## Some research papers
 - [x] Understanding deeplearning requires rethinking generalization (research paper)-- See mnist_generalization [notebook](./mnist_generalization.ipynb)
-- [ ] Generating Sequence with RNN (Alex graves, 2013)
 - [ ] LM are Few Shot learners (https://arxiv.org/pdf/2005.14165)
 - [ ] The recurrent temporal restricted boltzmann machine (research paper)-- energy model sounds interesting!
 - [ ] Faster Training: Super Convergence (research paper)
@@ -83,15 +123,9 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] https://openai.com/research/weak-to-strong-generalization
 - [ ] https://openai.com/research/microscope
 - [ ] https://openai.com/research/language-models-can-explain-neurons-in-language-models
+- [ ] Generating Sequence with RNN (Alex graves, 2013)
 
-## Some resourceful repos 
-- [ ] https://github.com/coqui-ai/TTS?tab=readme-ov-file#model-implementations
 
-## Tokenization
-- [ ] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
-- [ ] https://arxiv.org/pdf/2207.14255.pdf
-- [ ] https://arxiv.org/pdf/2304.08467.pdf
-- [ ] https://www.beren.io/2023-02-04-Integer-tokenization-is-insane/
 
 ## New (saw somewhere in twitter)
 - [ ] Byte-level tokenization
@@ -100,11 +134,18 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] MambaByte--  token-free SSM for modeling long byte-sequences  [2401.13660](https://arxiv.org/pdf/2401.13660)
 - [ ] Multi token Prediction-- https://arxiv.org/pdf/2404.19737
 
-## Flops
+
+
+## Flops (Floating-Point Operations Per Second)
 - [ ] gemm in C + Python (for noobs, use time monotonic!)
 
+
+
 ## Open Architectures
-- [ ] LLama 
 - [ ] Mixtral
-- [ ] is Phi open source
-- [ ] yolo?
+- [ ] is Phi architecture open source?
+
+
+
+## Some resourceful repos
+- [ ] https://github.com/coqui-ai/TTS?tab=readme-ov-file#model-implementations
