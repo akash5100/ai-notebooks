@@ -13,12 +13,13 @@ protip, use  perplexity.ai as a resource scrapper
 ## Development of language models
 - [x] Transformer (Attention is all you need) [read blog](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
   - [x] {Self, Multi Head, Cross} Attention
-  - [x] GPT (2018) [LLMs are multitask learners (Ilya)]
-  - [ ] BERT (2018) -> is NumBERT a thing?
-  <!-- RoBERTa, DistilBERT, or ALBERT -->
-  - [ ] T5 (2019)
+  - [x] GPT-1 (2018) / GPT-2 [GPT paper, LLMs are multitask learners] [read blog](https://akash5100.github.io/blog/2024/05/04/I_challenged_myself_to_visualize_attentions.html)
+    - Summarization, still has some errors, didnt find exact fix to that problem but [this paper](https://arxiv.org/pdf/2305.04853) might have answer
+  - [ ] BERT (2018)
   - [ ] RoBERTa (2019)
-  - [ ] Transformer-XL (2019)
+  - [ ] DistilBERT, ALBERT
+  - [ ] T5 (2019)
+  - [ ] TransformerXL (2019)
   - [ ] Reformer (2020)
   - [ ] FlashAttention
   - [ ] Longformer (2020)
@@ -33,7 +34,7 @@ protip, use  perplexity.ai as a resource scrapper
   - [ ] InfiniAtten (2024)
   - [ ] Grouped Query Attention
   - [ ] Sliding Window Attention
-
+  - [ ] GEAR: An Efficient KV Cache Compression Recipe for Near-Lossless Generative Inference of LLM
 
 
 ## Language Models
@@ -50,10 +51,11 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] RAG
 - [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
 - [ ] Greedy search used in LLMs for better predictions
-
+- [ ] https://openai.com/index/language-models-can-explain-neurons-in-language-models
 
 
 ## Tokenization
+- [ ] sentinel token [The procedure used in Donahue et al 2020, Aghajanyan et al., 2022, Fried et al., 2022]
 - [x] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
 - [ ] https://arxiv.org/pdf/2207.14255.pdf
 - [ ] https://arxiv.org/pdf/2304.08467.pdf
