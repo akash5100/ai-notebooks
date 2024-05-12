@@ -16,10 +16,11 @@ protip, use  perplexity.ai as a resource scrapper
   - [x] GPT-1 (2018) / GPT-2 [GPT paper, LLMs are multitask learners] [read blog](https://akash5100.github.io/blog/2024/05/04/I_challenged_myself_to_visualize_attentions.html)
     - Summarization, still has some errors, didnt find exact fix to that problem but [this paper](https://arxiv.org/pdf/2305.04853) might have answer
   - [ ] BERT (2018)
+  - [ ] TransformerXL (2019)
+  - [ ] Sparse Transformer (2019)
   - [ ] RoBERTa (2019)
   - [ ] DistilBERT, ALBERT
   - [ ] T5 (2019)
-  - [ ] TransformerXL (2019)
   - [ ] Reformer (2020)
   - [ ] FlashAttention
   - [ ] Longformer (2020)
@@ -43,7 +44,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] GRU 'done update'
 - [ ] Seq2Seq (Ilya, 2014)
 - [ ] JukeBox
-- [ ] Mixture of experts (MoE)
+- [ ] Mixture of experts (MoE) [This?](https://arxiv.org/pdf/1701.06538)
 - [ ] LLaMA
 - [ ] Switch Transformers
 - [ ] Multi-modality
@@ -52,6 +53,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
 - [ ] Greedy search used in LLMs for better predictions
 - [ ] https://openai.com/index/language-models-can-explain-neurons-in-language-models
+- [ ] Survey on Context length: https://arxiv.org/pdf/2402.02244
 
 
 ## Tokenization
@@ -135,6 +137,9 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Kolmogorov–Arnold Networks (KANs-- learned activations performs better than MLPs)
 - [ ] MambaByte--  token-free SSM for modeling long byte-sequences  [2401.13660](https://arxiv.org/pdf/2401.13660)
 - [ ] Multi token Prediction-- https://arxiv.org/pdf/2404.19737
+- [ ] https://arxiv.org/pdf/2401.00368
+- [ ] https://arxiv.org/pdf/2401.01335
+- [ ] https://arxiv.org/pdf/2404.12253
 
 
 
