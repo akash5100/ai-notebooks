@@ -10,18 +10,19 @@ protip, use  perplexity.ai as a resource scrapper
 
 
 
-## Development of language models
-- [x] Transformer (Attention is all you need) [read blog](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
+## Development of transformer based models and architecture
+- [x] Transformer (Attention is all you need) [blog](https://akash5100.github.io/blog/2024/04/28/Transformers.html)
   - [x] {Self, Multi Head, Cross} Attention
-  - [x] GPT-1 (2018) / GPT-2 [GPT paper, LLMs are multitask learners] [read blog](https://akash5100.github.io/blog/2024/05/04/I_challenged_myself_to_visualize_attentions.html)
+  - [ ] [Fast weights](https://arxiv.org/pdf/1610.06258) 
+  - [x] GPT-1 (2018) / GPT-2 [GPT paper, LLMs are multitask learners] [blog](https://akash5100.github.io/blog/2024/05/04/I_challenged_myself_to_visualize_attentions.html)
     - Summarization, still has some errors, didnt find exact fix to that problem but [this paper](https://arxiv.org/pdf/2305.04853) might have answer
-  - [ ] BERT (2018)
-  - [ ] TransformerXL (2019)
-  - [ ] Sparse Transformer (2019)
-  - [ ] RoBERTa (2019)
-  - [ ] DistilBERT, ALBERT
-  - [ ] T5 (2019)
-  - [ ] Reformer (2020)
+  - [x] BERT (2018) [blog](https://akash5100.github.io/blog/2024/05/09/Case_Study-_Transformer_based_architecture_development.html#bert-october-2018)
+  - [x] TransformerXL (2019) [blog](https://akash5100.github.io/blog/2024/05/09/Case_Study-_Transformer_based_architecture_development.html#transformer-xl-september-2018-and-xlnet-june-2019)
+  - [x] Sparse Transformer (2019)-- N sqrt(N) complexity. [blog](https://akash5100.github.io/blog/2024/05/09/Case_Study-_Transformer_based_architecture_development.html#sparse-transformers-april-2019)
+  - [ ] RoBERTa, DistilBERT, ALBERT-- these are BERT variations, good to know
+  - [ ] T5 (2019)-- Encoder-Decoder model
+  - [ ] Reformer (2020)-- N log(N) complexity
+  - [ ] Linformer-- linear complexity
   - [ ] FlashAttention
   - [ ] Longformer (2020)
   - [ ] Conformers (2020)
@@ -39,9 +40,11 @@ protip, use  perplexity.ai as a resource scrapper
 
 
 ## Language Models
-- [ ] RNN 'done update'
-- [ ] LSTM 'done update'
-- [ ] GRU 'done update'
+- [x] [RNN](https://akash5100.github.io/blog/2024/02/06/Tweaking_MLP_to_make_it_RNN.html)
+- [x] [LSTM](https://akash5100.github.io/blog/2024/02/07/LSTM.html)
+- [x] [GRU](https://akash5100.github.io/blog/2024/02/16/GRU.html)
+  - [ ] wait, should I try to train LSTM like I did for Transformers?
+    - They dont support parallel computation, but recently **xLSTM** dropped which does.
 - [ ] Seq2Seq (Ilya, 2014)
 - [ ] JukeBox
 - [ ] Mixture of experts (MoE) [This?](https://arxiv.org/pdf/1701.06538)
@@ -57,7 +60,7 @@ protip, use  perplexity.ai as a resource scrapper
 
 
 ## Tokenization
-- [ ] sentinel token [The procedure used in Donahue et al 2020, Aghajanyan et al., 2022, Fried et al., 2022]
+- [ ] sentinel token [The procedure used in *Donahue et al 2020, Aghajanyan et al., 2022, Fried et al., 2022*, described in Fill In Middle paper]
 - [x] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
 - [ ] https://arxiv.org/pdf/2207.14255.pdf
 - [ ] https://arxiv.org/pdf/2304.08467.pdf
@@ -71,7 +74,7 @@ protip, use  perplexity.ai as a resource scrapper
     - Positional encoding: https://arxiv.org/pdf/2211.00170
 - Math using tokens
   - GPT-2 -> Minerva 62B -> GPT-4 :)
-  - WizardMath
+  - WizardMath? 
 
 
 
@@ -83,9 +86,9 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Localization and Segmentation (cs231n)
 - [ ] Fast Faster Fastest?? R? - CNN's 
 - [ ] ResNet (residual and skip connection, research paper)
-- [ ] CLIP-ResNet (read somewhere kinda interesting, mostprobably best ResNet till date? not sure)
-- [ ] COCO dataset (train something) 
 - [ ] yolo
+- [ ] CLIP-ResNet (read somewhere kinda interesting, mostprobably best ResNet till date? not sure)
+- [ ] train something on COCO dataset? A good task? 
 - [ ] SSD?
 
 
@@ -95,6 +98,8 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] VAE
 - [ ] GAN
 - [ ] Stable Diffusion
+- [ ] DALL-E
+- [ ] Vision QA models
 
 
 
