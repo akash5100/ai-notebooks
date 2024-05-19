@@ -6,3 +6,5 @@ todo.md
 **/__pycache__
 *.pth
 *.pt
+__init__.py
+
