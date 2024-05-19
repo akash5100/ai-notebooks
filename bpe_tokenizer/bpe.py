@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import regex as re
-from base import BaseTokenizer, merge, get_stats 
+from .base import BaseTokenizer, merge, get_stats 
 
 
 LLAMA3_SPLIT_PATTERN = r"""(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"""
