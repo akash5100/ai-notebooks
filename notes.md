@@ -46,11 +46,12 @@ protip, use  perplexity.ai as a resource scrapper
   - [ ] wait, should I try to train LSTM like I did for Transformers?
     - They dont support parallel computation, but recently **xLSTM** dropped which does.
 - [ ] Seq2Seq (Ilya, 2014)
-- [ ] JukeBox
+- [ ] JukeBox- openai
 - [ ] Mixture of experts (MoE) [This?](https://arxiv.org/pdf/1701.06538)
-- [ ] LLaMA
+- [ ] LLaMA- metaai
 - [ ] Switch Transformers
 - [ ] Multi-modality
+  - [ ] https://arxiv.org/pdf/2405.09818v1
 - [ ] Beam Search?
 - [ ] RAG
 - [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
@@ -77,19 +78,25 @@ protip, use  perplexity.ai as a resource scrapper
   - WizardMath? 
 
 
+## Training
+- [ ] LoRA: https://arxiv.org/abs/2106.09685
+
 
 ## Vision
-- [ ] CNN Casestudy: 
-  - [ ] CNN - {Le - Alex - ZF - VGG - GoogLe}Net (inception architecture)
+- [x] CNN Casestudy: 
+  - [x] CNN - {Le - Alex - ZF - VGG - Google}Net
+    - TODO: (inception architecture)
+- [ ] ResNet (residual and skip connection, research paper)
 - [ ] Visualizing CNN techniques
   - [ ] DeepDream?
 - [ ] Localization and Segmentation (cs231n)
-- [ ] Fast Faster Fastest?? R? - CNN's 
-- [ ] ResNet (residual and skip connection, research paper)
-- [ ] yolo
+- [ ] R-CNN
+- [ ] Fast R-CNN 
+- [ ] Faster R-CNN 
+- [ ] YOLO: you only look once
+- [ ] SSD
 - [ ] CLIP-ResNet (read somewhere kinda interesting, mostprobably best ResNet till date? not sure)
 - [ ] train something on COCO dataset? A good task? 
-- [ ] SSD?
 
 
 
@@ -105,10 +112,10 @@ protip, use  perplexity.ai as a resource scrapper
 
 ## Reinforcement learning
 - [ ] RF
-- [ ] RoPE (it goes here? dont know.)
 - [ ] DQN
 - [ ] Policy Gradient Methods
 - [ ] DPO
+- [ ] RoPE (it goes here? dont know.)
 
 
 
