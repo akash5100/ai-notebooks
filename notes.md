@@ -7,7 +7,7 @@ protip, use  perplexity.ai as a resource scrapper
   Available in cs231n lecture.
 - [ ] Hessian Matrix (second order, BFGS, LBFGS etc)
 - [ ] AdamP, RAdam, and Stochastic Gradient Descent with Warm Restarts (SGDR)
-
+- [ ] Visualizing a loss landscape, interesting to implement (https://arxiv.org/abs/1712.09913)
 
 
 ## Development of transformer based models and architecture
@@ -39,6 +39,7 @@ protip, use  perplexity.ai as a resource scrapper
   - [ ] GEAR: An Efficient KV Cache Compression Recipe for Near-Lossless Generative Inference of LLM
 
 
+
 ## Language Models
 - [x] [RNN](https://akash5100.github.io/blog/2024/02/06/Tweaking_MLP_to_make_it_RNN.html)
 - [x] [LSTM](https://akash5100.github.io/blog/2024/02/07/LSTM.html)
@@ -60,6 +61,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Survey on Context length: https://arxiv.org/pdf/2402.02244
 
 
+
 ## Tokenization
 - [ ] sentinel token [The procedure used in *Donahue et al 2020, Aghajanyan et al., 2022, Fried et al., 2022*, described in Fill In Middle paper]
 - [x] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
@@ -78,25 +80,28 @@ protip, use  perplexity.ai as a resource scrapper
   - WizardMath? 
 
 
-## Training
+
+## Finetuning
 - [ ] LoRA: https://arxiv.org/abs/2106.09685
+
 
 
 ## Vision
 - [x] CNN Casestudy: 
-  - [x] CNN - {Le - Alex - ZF - VGG - Google}Net
+  - [x] CNN - { Le -> Alex -> ZF -> VGG -> Google }Net
     - TODO: (inception architecture)
-- [ ] ResNet (residual and skip connection, research paper)
-- [ ] Visualizing CNN techniques
-  - [ ] DeepDream?
-- [ ] Localization and Segmentation (cs231n)
-- [ ] R-CNN
-- [ ] Fast R-CNN 
-- [ ] Faster R-CNN 
-- [ ] YOLO: you only look once
+- [x] ResNet (residual and skip connection, research paper)
+- [x] Classification + Localization = Object detection (cs231n)
+  - [x] R-CNN
+  - [x] Fast R-CNN 
+  - [x] Faster R-CNN 
+  - [x] YOLO: you only look once
+- [ ] segmentation?
 - [ ] SSD
 - [ ] CLIP-ResNet (read somewhere kinda interesting, mostprobably best ResNet till date? not sure)
 - [ ] train something on COCO dataset? A good task? 
+- [ ] Visualizing CNN techniques
+  - [ ] DeepDream?
 
 
 
@@ -111,7 +116,7 @@ protip, use  perplexity.ai as a resource scrapper
 
 
 ## Reinforcement learning
-- [ ] RF
+- [ ] RF -- its a framework to teach agents
 - [ ] DQN
 - [ ] Policy Gradient Methods
 - [ ] DPO
@@ -124,9 +129,13 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Weight Standardization
 - [ ] Label Smoothing
 - [ ] Filter Response Normalization 
-- [ ] RMSNormLayer # most used, I think nowadays
-(TODO: add more recently used normalization layers in chronological order, to know how one improved other for eg)
-- [ ] LayerNorm (research paper)
+- [ ] Normalization layers
+  - [ ] BatchNorm
+  - [ ] LayerNorm
+  - [ ] GroupNorm
+  - [ ] InstanceNorm
+  - [ ] PowerNorm and weightNorm (are they good?)
+  - [ ] RMSNorm--  most used, I think nowadays, used in LLaMA, mostprobalbly also in GPT-4 (who knows)
 
 
 
