@@ -4,6 +4,7 @@ protip, use  perplexity.ai as a resource scrapper
 
 ## Optimization algorithm
 - [x] SGD -> Momentum -> NAG -> AdaGrad -> RMSProp -> Adam -> AdamW -> AdamScheduleFree (2024, by FAIR) [read blog](https://akash5100.github.io/blog/2024/04/12/Optimization_techniques.html)
+  - [ ] ScheduleFree, better than cosine decay -- https://arxiv.org/pdf/2405.15682
   Available in cs231n lecture.
 - [ ] Hessian Matrix (second order, BFGS, LBFGS etc)
 - [ ] AdamP, RAdam, and Stochastic Gradient Descent with Warm Restarts (SGDR)
@@ -53,6 +54,7 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] Switch Transformers
 - [ ] Multi-modality
   - [ ] https://arxiv.org/pdf/2405.09818v1
+  - [ ] Vision-Language https://arxiv.org/abs/2405.17247 (May 2024)
 - [ ] Beam Search?
 - [ ] RAG
 - [ ] Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
