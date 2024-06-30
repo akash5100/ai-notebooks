@@ -4,8 +4,10 @@ protip, use  perplexity.ai as a resource scrapper
 
 ## Optimization algorithm
 - [x] SGD -> Momentum -> NAG -> AdaGrad -> RMSProp -> Adam -> AdamW -> AdamScheduleFree (2024, by FAIR) [read blog](https://akash5100.github.io/blog/2024/04/12/Optimization_techniques.html)
-  - [ ] ScheduleFree, better than cosine decay -- https://arxiv.org/pdf/2405.15682
+  - [ ] ScheduleFree, better than cosine decay -- https://arxiv.org/pdf/2405.15682 (Latest research on this part)
   Available in cs231n lecture.
+
+## To learn later (not interested right now)
 - [ ] Hessian Matrix (second order, BFGS, LBFGS etc)
 - [ ] AdamP, RAdam, and Stochastic Gradient Descent with Warm Restarts (SGDR)
 - [ ] Visualizing a loss landscape, interesting to implement (https://arxiv.org/abs/1712.09913)
@@ -62,21 +64,23 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] https://openai.com/index/language-models-can-explain-neurons-in-language-models
 - [ ] Survey on Context length: https://arxiv.org/pdf/2402.02244
 
-
+### Positional embeddings
+- [ ] RoPE
+- [ ] CoPE
 
 ## Tokenization
 - [ ] sentinel token [The procedure used in *Donahue et al 2020, Aghajanyan et al., 2022, Fried et al., 2022*, described in Fill In Middle paper]
-- [x] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
-- [ ] https://arxiv.org/pdf/2207.14255.pdf
-- [ ] https://arxiv.org/pdf/2304.08467.pdf
-- [x] https://www.beren.io/2023-02-04-Integer-tokenization-is-insane/
+- [x] https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf (GPT-2 original paper)
+- [x] https://arxiv.org/pdf/2207.14255.pdf (Fill in the middle tokens)
+- [ ] https://arxiv.org/pdf/2304.08467.pdf (learning to compress prompts with GIST tokens)
+- [x] https://www.beren.io/2023-02-04-Integer-tokenization-is-insane/ (a blogs shows tokenization in LLMs is just pure memorization of artihmetics (next token prediction))
   - "tokenization inconsistency" or "numerical tokenization problem"
   - Researchers have addressed this challenge in various ways:
     - Specialized tokenizers
     - MathBERT
     - Subword tokenization
       Google's PaLM (2022) use subword tokenization, which breaks down numbers into subwords (e.g., 123 → [1, 2, 3]). This allows for more consistent tokenization and better generalization to unseen numbers
-    - Positional encoding: https://arxiv.org/pdf/2211.00170
+    - Positional encoding: https://arxiv.org/pdf/2211.00170 (math in transformer: Three results on interpretability and generalization)
 - Math using tokens
   - GPT-2 -> Minerva 62B -> GPT-4 :)
   - WizardMath? 
@@ -122,7 +126,6 @@ protip, use  perplexity.ai as a resource scrapper
 - [ ] DQN
 - [ ] Policy Gradient Methods
 - [ ] DPO
-- [ ] RoPE (it goes here? dont know.)
 
 
 
@@ -137,15 +140,15 @@ protip, use  perplexity.ai as a resource scrapper
   - [ ] GroupNorm
   - [ ] InstanceNorm
   - [ ] PowerNorm and weightNorm (are they good?)
-  - [ ] RMSNorm--  most used, I think nowadays, used in LLaMA, mostprobalbly also in GPT-4 (who knows)
+  - [ ] RMSNorm--  most used, I think nowadays, used in LLaMA, Mistral, (Grok?), mostprobalbly also in GPT-4 (who knows)
 
 
 
 ## Some research papers
 - [x] Understanding deeplearning requires rethinking generalization (research paper)-- See mnist_generalization [notebook](./mnist_generalization.ipynb)
-- [ ] LM are Few Shot learners (https://arxiv.org/pdf/2005.14165)
-- [ ] The recurrent temporal restricted boltzmann machine (research paper)-- energy model sounds interesting!
-- [ ] Faster Training: Super Convergence (research paper)
+- [ ] LM are Few Shot learners (GPT-3 paper: https://arxiv.org/pdf/2005.14165)
+- [ ] The recurrent temporal restricted boltzmann machine (research paper)-- energy-model sounds interesting!
+- [ ] Faster Training: Super-Convergence (research paper)
 - [ ] Training method: CURRICULUM LEARNING FOR LANGUAGE MODELING (research paper)
 - [ ] https://openai.com/research/weak-to-strong-generalization
 - [ ] https://openai.com/research/microscope
@@ -167,14 +170,16 @@ protip, use  perplexity.ai as a resource scrapper
 
 
 ## Flops (Floating-Point Operations Per Second)
-- [ ] gemm in C + Python (for noobs, use time monotonic!)
-
+- [x] gemm in Python
+- [ ] gemm in JAX
+- [ ] gemm in c++
 
 
 ## Open Architectures
 - [ ] Mixtral
 - [ ] is Phi architecture open source?
-
+- [ ] Grok-1
+- [ ] OpenHermes by NousResearch
 
 
 ## Some resourceful repos
