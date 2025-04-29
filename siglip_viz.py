@@ -252,7 +252,7 @@ if st.sidebar.button("✨ Generate Visualizations", disabled=not valid_config):
                 attn_map = attention_maps_data.get(target_patches, {}).get(layer_idx)
 
                 if attn_map is not None:
-                    im = ax.imshow(attn_map, cmap="viridis")
+                    im = ax.imshow(attn_map, cmap="turbo")
                     ax.set_title(f"Layer {layer_idx}, Target: {target_patches}")
                     plot_successful = True
                 else:
